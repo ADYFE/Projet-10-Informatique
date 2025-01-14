@@ -1,5 +1,37 @@
 #include "Fonction.h"
 
+// Nouvelle fonction pour écrire un fichier texte
+void ecrireFichierTexte() {
+    char nomFichier[256];
+    char buffer[1024];
+    FILE *fichier;
+
+    printf("\nEntrez le nom du fichier a creer (avec l'extension .txt): ");
+    scanf("%255s", nomFichier);
+
+    fichier = fopen(nomFichier, "w");
+    if (fichier == NULL) {
+        printf("Erreur lors de la creation du fichier!\n");
+        return;
+    }
+
+    printf("Entrez le texte (tapez 'FIN' sur une nouvelle ligne pour terminer):\n");
+    getchar(); // Pour consommer le newline precedent
+
+    while (1) {
+        fgets(buffer, sizeof(buffer), stdin);
+        
+        if (strcmp(buffer, "FIN\n") == 0) {
+            break;
+        }
+        
+        fputs(buffer, fichier);
+    }
+
+    fclose(fichier);
+    printf("Le fichier %s a ete cree avec succes!\n", nomFichier);
+}
+
 // Fonction pour analyser le fichier texte
 void analyserFichier(const char *nomFichier) {
     FILE *fichier = fopen(nomFichier, "r");
