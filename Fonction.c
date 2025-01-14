@@ -35,6 +35,40 @@ void libererDictionnaire() {
     capaciteDictionnaire = 0;
 }
 
+// Fonction pour convertir un mot en minuscules
+void convertirEnMinuscules(char *mot) {
+    for(int i = 0; mot[i]; i++) {
+        mot[i] = tolower(mot[i]);
+    }
+}
+
+// Fonction pour ajouter ou mettre a jour la frequence d'un mot dans le dictionnaire
+void ajouterMotAuDictionnaire(char *mot) {
+    convertirEnMinuscules(mot);
+
+    // Rechercher si le mot existe deja
+    for(int i = 0; i < nombreMots; i++) {
+        if(strcmp(dictionnaire[i].mot, mot) == 0) {
+            dictionnaire[i].frequence++;
+            return;
+        }
+    }
+
+    // Vérifier si nous devons redimensionner
+    if(nombreMots >= capaciteDictionnaire) {
+        redimensionnerDictionnaire();
+    }
+
+    // Ajouter un nouveau mot
+    dictionnaire[nombreMots].mot = strdup(mot);
+    if(dictionnaire[nombreMots].mot == NULL) {
+        printf("Erreur d'allocation pour le mot!\n");
+        return;
+    }
+    dictionnaire[nombreMots].frequence = 1;
+    nombreMots++;
+}
+
 // Nouvelle fonction pour écrire un fichier texte
 void ecrireFichierTexte() {
     char nomFichier[256];
