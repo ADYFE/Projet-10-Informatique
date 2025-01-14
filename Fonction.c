@@ -55,3 +55,50 @@ void analyserFichier(const char *nomFichier) {
 
     fclose(fichier);
 }
+
+// Fonction de comparaison pour le tri des frequences
+int comparerFrequences(const void *a, const void *b) {
+    return ((FrequenceMot *)b)->frequence - ((FrequenceMot *)a)->frequence;
+}
+
+// Fonction pour afficher les mots les plus frequents
+void afficherMotsFrequents(int n) {
+    qsort(dictionnaire, nombreMots, sizeof(FrequenceMot), comparerFrequences);
+
+    printf("\nMots les plus frequents:\n");
+    for(int i = 0; i < n && i < nombreMots; i++) {
+        printf("%s: %d fois\n", dictionnaire[i].mot, dictionnaire[i].frequence);
+    }
+}
+
+// Fonction pour rechercher la frequence d'un mot
+void rechercherFrequenceMot(const char *mot) {
+    char motRecherche[LONGUEUR_MAX_MOT];
+    strcpy(motRecherche, mot);
+    convertirEnMinuscules(motRecherche);
+
+    for(int i = 0; i < nombreMots; i++) {
+        if(strcmp(dictionnaire[i].mot, motRecherche) == 0) {
+            printf("\nLe mot '%s' apparait %d fois\n", mot, dictionnaire[i].frequence);
+            return;
+        }
+    }
+    printf("\nLe mot '%s' n'a pas ete trouve dans le texte\n", mot);
+}
+
+// Fonction pour sauvegarder les statistiques dans un fichier
+void sauvegarderStatistiques(const char *nomFichier) {
+    FILE *fichier = fopen(nomFichier, "w");
+    if(fichier == NULL) {
+        printf("Erreur lors de la creation du fichier de sortie!\n");
+        return;
+    }
+
+    fprintf(fichier, "Statistiques de frequence des mots:\n\n");
+    for(int i = 0; i < nombreMots; i++) {
+        fprintf(fichier, "%s: %d\n", dictionnaire[i].mot, dictionnaire[i].frequence);
+    }
+
+    fclose(fichier);
+    printf("\nStatistiques sauvegardees dans %s\n", nomFichier);
+}
