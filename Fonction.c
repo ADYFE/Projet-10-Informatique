@@ -1,5 +1,40 @@
 #include "Fonction.h"
 
+// Fonction pour initialiser le dictionnaire
+void initialiserDictionnaire() {
+    capaciteDictionnaire = 10;
+    dictionnaire = (FrequenceMot *)malloc(capaciteDictionnaire * sizeof(FrequenceMot));
+    if (dictionnaire == NULL) {
+        printf("Erreur d'allocation de memoire!\n");
+        exit(1);
+    }
+}
+
+// Fonction pour redimensionner le dictionnaire
+void redimensionnerDictionnaire() {
+    int nouvelleCapacite = capaciteDictionnaire * 2;
+    FrequenceMot *nouveauDictionnaire = (FrequenceMot *)realloc(dictionnaire, nouvelleCapacite * sizeof(FrequenceMot));
+
+    if (nouveauDictionnaire == NULL) {
+        printf("Erreur lors du redimensionnement du dictionnaire!\n");
+        return;
+    }
+
+    dictionnaire = nouveauDictionnaire;
+    capaciteDictionnaire = nouvelleCapacite;
+}
+
+// Fonction pour liberer la memoire
+void libererDictionnaire() {
+    for(int i = 0; i < nombreMots; i++) {
+        free(dictionnaire[i].mot);
+    }
+    free(dictionnaire);
+    dictionnaire = NULL;
+    nombreMots = 0;
+    capaciteDictionnaire = 0;
+}
+
 // Nouvelle fonction pour écrire un fichier texte
 void ecrireFichierTexte() {
     char nomFichier[256];
