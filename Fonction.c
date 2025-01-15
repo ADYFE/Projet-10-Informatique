@@ -35,7 +35,7 @@ void libererDictionnaire() {
     capaciteDictionnaire = 0;
 }
 
-// Fonction pour convertir un mot en minuscules
+// Fonction pour convertir un mot en minuscules. Ceci permettra  donc une bonne comparaison des mots. En effet "Plusieurs" et "plusieurs" seront comptes differemment dans le code si on ne fait pa cette fonction.
 void convertirEnMinuscules(char *mot) {
     for(int i = 0; mot[i]; i++) {
         mot[i] = tolower(mot[i]);
