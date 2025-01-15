@@ -1,5 +1,74 @@
 #include "Fonction.h"
 
+// Fonction pour initialiser le dictionnaire
+void initialiserDictionnaire() {
+    capaciteDictionnaire = 10;
+    dictionnaire = (FrequenceMot *)malloc(capaciteDictionnaire * sizeof(FrequenceMot));
+    if (dictionnaire == NULL) {
+        printf("Erreur d'allocation de memoire!\n");
+        exit(1);
+    }
+}
+
+// Fonction pour redimensionner le dictionnaire
+void redimensionnerDictionnaire() {
+    int nouvelleCapacite = capaciteDictionnaire * 2;
+    FrequenceMot *nouveauDictionnaire = (FrequenceMot *)realloc(dictionnaire, nouvelleCapacite * sizeof(FrequenceMot));
+
+    if (nouveauDictionnaire == NULL) {
+        printf("Erreur lors du redimensionnement du dictionnaire!\n");
+        return;
+    }
+
+    dictionnaire = nouveauDictionnaire;
+    capaciteDictionnaire = nouvelleCapacite;
+}
+
+// Fonction pour liberer la memoire
+void libererDictionnaire() {
+    for(int i = 0; i < nombreMots; i++) {
+        free(dictionnaire[i].mot);
+    }
+    free(dictionnaire);
+    dictionnaire = NULL;
+    nombreMots = 0;
+    capaciteDictionnaire = 0;
+}
+
+// Fonction pour convertir un mot en minuscules. Ceci permettra  donc une bonne comparaison des mots. En effet "Plusieurs" et "plusieurs" seront comptes differemment dans le code si on ne fait pa cette fonction.
+void convertirEnMinuscules(char *mot) {
+    for(int i = 0; mot[i]; i++) {
+        mot[i] = tolower(mot[i]);
+    }
+}
+
+// Fonction pour ajouter ou mettre a jour la frequence d'un mot dans le dictionnaire
+void ajouterMotAuDictionnaire(char *mot) {
+    convertirEnMinuscules(mot);
+
+    // Rechercher si le mot existe deja
+    for(int i = 0; i < nombreMots; i++) {
+        if(strcmp(dictionnaire[i].mot, mot) == 0) {
+            dictionnaire[i].frequence++;
+            return;
+        }
+    }
+
+    // Vérifier si nous devons redimensionner
+    if(nombreMots >= capaciteDictionnaire) {
+        redimensionnerDictionnaire();
+    }
+
+    // Ajouter un nouveau mot
+    dictionnaire[nombreMots].mot = strdup(mot);
+    if(dictionnaire[nombreMots].mot == NULL) {
+        printf("Erreur d'allocation pour le mot!\n");
+        return;
+    }
+    dictionnaire[nombreMots].frequence = 1;
+    nombreMots++;
+}
+
 // Nouvelle fonction pour écrire un fichier texte
 void ecrireFichierTexte() {
     char nomFichier[256];
