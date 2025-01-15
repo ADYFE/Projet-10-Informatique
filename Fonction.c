@@ -76,7 +76,7 @@ void ecrireFichierTexte() {
     FILE *fichier;
 
     printf("\nEntrez le nom du fichier a creer (avec l'extension .txt): ");
-    scanf("%255s", nomFichier); // L'utilisateur devra entrer un nom a un mot car avec scanf le programme compte uniquement un mot. Avec fgets ou gets le programme ne marche pas.
+    scanf("%s", nomFichier); // L'utilisateur devra entrer un nom a un mot car avec scanf le programme compte uniquement un mot. Avec fgets ou gets le programme ne marche pas.
 
     fichier = fopen(nomFichier, "w");
     if (fichier == NULL) {
