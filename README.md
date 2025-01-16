@@ -40,7 +40,6 @@ Ce programme en langage C est un analyseur lexical hautement modulaire et perfor
 - Vérification systématique des allocations
 - Gestion des dépassements de capacité
 - Arrêts contrôlés en cas d'erreurs critiques
-  ##Détails d'Implémentation
 
 ## Détails d'Implémentation
 
