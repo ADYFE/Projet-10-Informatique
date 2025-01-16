@@ -72,32 +72,52 @@ void ajouterMotAuDictionnaire(char *mot) {
 // Nouvelle fonction pour écrire un fichier texte
 void ecrireFichierTexte() {
     char nomFichier[256];
-    char buffer[1024];
+    char *buffer;
+    size_t tailleBuffer = 10; // Taille initiale du buffer
     FILE *fichier;
 
+    // Demander le nom du fichier à créer
     printf("\nEntrez le nom du fichier a creer (avec l'extension .txt): ");
-    scanf("%s", nomFichier); // L'utilisateur devra entrer un nom a un mot car avec scanf le programme compte uniquement un mot. Avec fgets ou gets le programme ne marche pas.
+    scanf("%s", nomFichier);
 
+    // Ouvrir le fichier en écriture
     fichier = fopen(nomFichier, "w");
     if (fichier == NULL) {
         printf("Erreur lors de la creation du fichier!\n");
         return;
     }
 
+    // Allouer une taille initiale pour le buffer
+    buffer = (char *)malloc(tailleBuffer * sizeof(char));
+    if (buffer == NULL) {
+        printf("Erreur d'allocation de memoire pour le buffer!\n");
+        fclose(fichier);
+        return;
+    }
+
     printf("Entrez le texte (tapez 'FIN' sur une nouvelle ligne pour terminer):\n");
-    getchar(); // Pour consommer le newline precedent
+    getchar(); // Consommer le newline précédent laissé par scanf
 
     while (1) {
-        fgets(buffer, sizeof(buffer), stdin);
-        
+        // Lire une ligne de texte depuis l'utilisateur
+        if (getline(&buffer, &tailleBuffer, stdin) == -1) {
+            printf("Erreur lors de la lecture du texte !\n");
+            break;
+        }
+
+        // Vérifier si l'utilisateur a entré "FIN"
         if (strcmp(buffer, "FIN\n") == 0) {
             break;
         }
-        
+
+        // Écrire la ligne dans le fichier
         fputs(buffer, fichier);
     }
 
+    // Libérer la mémoire allouée pour le buffer
+    free(buffer);
     fclose(fichier);
+
     printf("Le fichier %s a ete cree avec succes!\n", nomFichier);
 }
 
