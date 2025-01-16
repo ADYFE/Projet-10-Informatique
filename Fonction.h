@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define LONGUEUR_MAX_MOT 100
+#define LONGUEUR_MAX_MOT 256
 
 // Structure pour stocker le mot et sa frequence
 typedef struct {
