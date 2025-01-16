@@ -2,17 +2,22 @@
 
 ## Description du Projet
 
-Ce programme en langage C est un outil complet d'analyse textuelle qui permet de :
+Ce programme en langage C est un analyseur lexical hautement modulaire et performant, offrant une exploration linguistique précise et dynamique. Il permet de :
 - Créer et écrire des fichiers texte
 - Analyser des fichiers texte existants
 - Calculer des statistiques linguistiques
 - Suivre la fréquence des mots
 - Rechercher la fréquence d'un mot spécifique
 
+## Caractéristiques Clés
+- Allocation mémoire dynamique
+- Flexibilité de redimensionnement
+- Gestion optimisée de la mémoire
+
 ## Fonctionnalités Principales
 
 1. **Création de Fichier Texte**
-   - Permet de créer un nouveau fichier texte interactivement
+   - Permet de créer un nouveau fichier texte interactivement et de manière dynamique
    - Possibilité de saisir du contenu ligne par ligne
    - Arrêt de la saisie avec la commande 'FIN'
 
@@ -29,6 +34,26 @@ Ce programme en langage C est un outil complet d'analyse textuelle qui permet de
 
 4. **Sauvegarde des Statistiques**
    - Option de sauvegarde des statistiques dans un fichier
+
+## Gestion Avancée des Erreurs
+- Mécanismes de Sécurité
+- Vérification systématique des allocations
+- Gestion des dépassements de capacité
+- Arrêts contrôlés en cas d'erreurs critiques
+  ##Détails d'Implémentation
+
+## Détails d'Implémentation
+
+1. **Analyse de Fichier Sophistiquée**
+- Comptage précis des lignes
+- Détection dynamique des mots
+- Gestion des fichiers sans saut de ligne final
+
+2. **Algorithmes Spécialisés**
+
+- Tri par fréquence descendante
+- Conversion uniforme en minuscules
+- Détection et agrégation des occurrences
 
 ## Prérequis
 
